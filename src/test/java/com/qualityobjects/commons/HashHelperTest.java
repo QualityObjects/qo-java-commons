@@ -1,6 +1,6 @@
 package com.qualityobjects.commons;
 
-import commons.utils.HashHelper;
+import com.qualityobjects.commons.utils.HashHelper;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

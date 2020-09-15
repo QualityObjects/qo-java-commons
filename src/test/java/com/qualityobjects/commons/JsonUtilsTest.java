@@ -3,7 +3,7 @@ package com.qualityobjects.commons;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import commons.utils.JsonUtils;
+import com.qualityobjects.commons.utils.JsonUtils;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
