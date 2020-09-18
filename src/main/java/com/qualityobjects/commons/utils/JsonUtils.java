@@ -52,7 +52,7 @@ public class JsonUtils {
      * <code>
      * {"f1":2345,"f2":"Test de valor"}
      * </code>
-     * 
+     *
      * @param obj
      * @return JSON string representation from object
      */
@@ -85,7 +85,6 @@ public class JsonUtils {
                 return null;
             return MAPPER.readValue(json, type);
         } catch (JsonParseException e) {
-            LOG.error(ERROR_JSON, json, e);
             if (json.length() > 60) {
                 json = json.substring(0, 50) + "...";
             }
@@ -98,7 +97,7 @@ public class JsonUtils {
      * <code>
      * {"f1":2345,"f2":"Test de valor"}
      * </code>
-     * 
+     *
      * @param obj
      * @return JSON string representation from object
      */
