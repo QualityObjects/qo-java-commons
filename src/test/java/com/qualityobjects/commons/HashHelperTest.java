@@ -10,10 +10,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 
 @ExtendWith(MockitoExtension.class)
-public class HashHelperTest {
+class HashHelperTest {
 
 	@Test
-	public void hashSHA256Test() {
+	void hashSHA256Test() {
 
 		String output = HashHelper.hashSHA256("Test");
 
@@ -21,7 +21,7 @@ public class HashHelperTest {
 	}
 
 	@Test
-	public void hashSHA256NullTest() {
+	void hashSHA256NullTest() {
 
 		String output = HashHelper.hashSHA256(null);
 
@@ -30,7 +30,7 @@ public class HashHelperTest {
 	}
 
 	@Test
-	public void hashExceptionTest() {
+	void hashExceptionTest() {
 
 		String output ="";
 
@@ -40,7 +40,7 @@ public class HashHelperTest {
 	}
 
 	@Test
-	public void hashMD5Test() {
+	void hashMD5Test() {
 
 		String output = HashHelper.hashMD5("Test");
 
@@ -48,7 +48,7 @@ public class HashHelperTest {
 	}
 
 	@Test
-	public void hashMD5NullTest() {
+	void hashMD5NullTest() {
 
 		String output = HashHelper.hashMD5(null);
 
