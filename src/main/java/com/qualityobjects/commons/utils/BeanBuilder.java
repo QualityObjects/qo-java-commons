@@ -9,6 +9,8 @@ import org.jeasy.random.FieldPredicates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.qualityobjects.commons.exception.ClassNotInstantiatedException;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -28,7 +30,8 @@ import java.util.Map;
 public class BeanBuilder<T> {
 
   private static final Logger LOG = LoggerFactory.getLogger(BeanBuilder.class);
-
+  private static final String INSTANCE_ERROR = "Class can not be instantiated: %s";
+  private static final String CREATE_INSTANCE_ERROR = "Error creating instance of: %s";
 
   private final Class<T> beanClass;
   private final Map<String, Object> data = new HashMap<>();
@@ -46,7 +49,8 @@ public class BeanBuilder<T> {
   public BeanBuilder<T> fillRandomAtts(List<String> listaAtributos) {
 		
 	  try {
-	  	Object bean = beanClass.getDeclaredConstructor().newInstance();
+		Object bean;
+	  	beanClass.getDeclaredConstructor().newInstance();
 		
 		Method getterField;
 		
@@ -76,8 +80,8 @@ public class BeanBuilder<T> {
 	  
 	  } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 		        | NoSuchMethodException | SecurityException e) {
-	        LOG.error("Error creating instance of: " + this.beanClass, e);
-	        throw new RuntimeException("Class can not be instantiated: " + this.beanClass);
+	        LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass), e);
+	        throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
 	  }
   }
 
@@ -86,7 +90,7 @@ public class BeanBuilder<T> {
 	  try {
 		T bean;
 		
-			bean = beanClass.getDeclaredConstructor().newInstance();
+		beanClass.getDeclaredConstructor().newInstance();
 		
 		
 		EasyRandomParameters parameters = new EasyRandomParameters()
@@ -109,8 +113,8 @@ public class BeanBuilder<T> {
 	    
 	  } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 		        | NoSuchMethodException | SecurityException e) {
-	        LOG.error("Error creating instance of: " + this.beanClass, e);
-	        throw new RuntimeException("Class can not be instantiated: " + this.beanClass);
+	        LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass), e);
+	        throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
 	    }
   }
 
@@ -138,7 +142,8 @@ public class BeanBuilder<T> {
     try {
       T bean = beanClass.getDeclaredConstructor().newInstance();
       
-      for(String fieldName : this.data.keySet()) {
+      for(Map.Entry<String, Object> fields: this.data.entrySet()) {
+    	String fieldName = fields.getKey();
         Field field = beanClass.getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(bean, data.get(fieldName));
@@ -147,34 +152,10 @@ public class BeanBuilder<T> {
       return bean;
     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
         | NoSuchMethodException | SecurityException | NoSuchFieldException e) {
-        LOG.error("Error creating instance of: " + this.beanClass, e);
-        throw new RuntimeException("Class can not be instantiated: " + this.beanClass);
+        LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass), e);
+        throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
     }
   }
   
   
 }
-
-/*
-@Data
-class Rob {
-  private String name;
-  private LocalDate date;
-  private LocalDateTime hora;
-  private Double doble;
-  private Integer entero;
-  
-  public static void main(String[] args) {
-    Rob rob = BeanBuilder.builder(Rob.class)
-    .set("name", "Roberto")
-    .set("entero", 35)
-    .set("doble", 21.345)
-    .set("date", LocalDate.now())
-    .set("hora", LocalDateTime.now())
-    .build();
-    System.out.println(rob.toString());
-    System.out.println(BeanBuilder.builder(Rob.class).copyFrom(rob).set("name", "John").build().toString());
-    
-  }
-}
-*/

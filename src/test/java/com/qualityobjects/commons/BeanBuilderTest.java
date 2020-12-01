@@ -20,30 +20,23 @@ import com.qualityobjects.commons.utils.BeanBuilder;
 class BeanBuilderTest {
 	
 	private Person bean;
-	private Employee errorBean;
 	private BeanBuilder bb;
 	
 	@Test
 	void beanBuilderExceptionsTest() {
-		// IllegalAccessException caught in the .fillRandomAtts() method for instantiating a class that does not exist
+		// RuntimeException caught in the .fillRandomAtts() method for instantiating a class that does not exist
 		List<String> listAtts = new ArrayList<String>();
 		listAtts.add("firstName");
-		Assertions.assertThrows(RuntimeException.class, () -> {
-			errorBean = BeanBuilder.builder(Employee.class)
-					.fillRandomAtts(listAtts)
-					.build();
-		});
 		
-		// IllegalAccessException caught in the .createRandomBean() method for instantiating a class that does not exist
-		Assertions.assertThrows(RuntimeException.class, () -> {
-			errorBean = BeanBuilder.builder(Employee.class)
-					.createRandomBean();
-		});
+		final BeanBuilder bb = BeanBuilder.builder(Employee.class);
 		
-		// IllegalAccessException caught in the .build() method for instantiating a class that does not exist
-		Assertions.assertThrows(RuntimeException.class, () -> {
-			errorBean = BeanBuilder.builder(Employee.class).build();
-		});
+		assertThrows(RuntimeException.class, () -> bb.fillRandomAtts(listAtts));
+		
+		// RuntimeException caught in the .createRandomBean() method for instantiating a class that does not exist
+		assertThrows(RuntimeException.class, () -> bb.createRandomBean());
+		
+		// RuntimeException caught in the .build() method for instantiating a class that does not exist
+		assertThrows(RuntimeException.class, () -> bb.build());
 	}
 	
 	@Test
