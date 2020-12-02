@@ -19,10 +19,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class JsonUtilsTest {
+class JsonUtilsTest {
 	private static final String LINE_SEP = System.getProperty("line.separator");
 	@Test
-	public void testSnakeCase() {
+	void testSnakeCase() {
 		String input = "firstName";
 		String sc = JsonUtils.toSnakeCase(input);
 		assertEquals("first_name", sc);
@@ -41,7 +41,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void testToJson() throws IOException {
+	void testToJson() throws IOException {
 		LocalDate date = LocalDate.now();
 		Map<String, Object> input = Map.of("str", "Hola", "num", 23, "date", date);
 		String json = JsonUtils.toJSON(input);
@@ -61,7 +61,7 @@ public class JsonUtilsTest {
 	}
 
 	@Test
-	public void testParseJsonNull() throws IOException {
+	void testParseJsonNull() throws IOException {
 		
 		Map<String, Object> output = JsonUtils.parseJSON(null, new TypeReference<Map<String, Object>>() {});
 		
@@ -70,7 +70,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void testToJsonNull() throws IOException {
+	void testToJsonNull() throws IOException {
 		
 		String output = JsonUtils.toJSON(null);
 		
@@ -79,7 +79,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void testParseJsonException() throws IOException {
+	void testParseJsonException() throws IOException {
 		
 		try {
 			Map<String, Object> output = JsonUtils.parseJSON("holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfjasdklñgjsadklñgnasdklgjklasdjgklasdjgklasdjgksdjagklsdjgklsdj", new TypeReference<>() {});
@@ -89,7 +89,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void testToPrettyJSON() throws IOException {
+	void testToPrettyJSON() throws IOException {
 		LocalDate date = LocalDate.of(2020, 06, 22);
 		Map<String, Object> input = new HashMap<String, Object>();
 		
@@ -103,7 +103,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void testToPrettyJsonNull() throws IOException {
+	void testToPrettyJsonNull() throws IOException {
 		
 		String output = JsonUtils.toPrettyJSON(null);
 		
@@ -112,7 +112,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void testToPrettyJsonNullNull() throws IOException {
+	void testToPrettyJsonNullNull() throws IOException {
 		
 		String output = JsonUtils.toPrettyJSON(null, Map.class);
 		
@@ -121,7 +121,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void testToPrettyJsonObject() throws IOException {
+	void testToPrettyJsonObject() throws IOException {
 		
 		LocalDate date = LocalDate.of(2020, 06, 22);
 		Map<String, Object> input = new HashMap<String, Object>();
@@ -136,7 +136,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void testToMap() throws IOException {
+	void testToMap() throws IOException {
 		
 		String json = "{ \"f1\" : \"v1\" } ";
 
