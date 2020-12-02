@@ -99,6 +99,8 @@ public class QOException extends Exception {
 		public static final int INVALID_DATA = 3002;
 		
 		public static final int MAX_USERS_DEVICES = 4001;
+		public static final int DOCUMENT_ERROR = 4002;
+
 		
 	}
 }
