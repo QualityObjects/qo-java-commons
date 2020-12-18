@@ -65,7 +65,7 @@ class JsonUtilsTest {
 		
 		Map<String, Object> output = JsonUtils.parseJSON(null, new TypeReference<Map<String, Object>>() {});
 		
-		Assert.assertThat(output, equalTo(null));
+		Assert.assertNull(output);
 		
 	}
 	
@@ -74,7 +74,7 @@ class JsonUtilsTest {
 		
 		String output = JsonUtils.toJSON(null);
 		
-		Assert.assertThat(output, equalTo(null));
+		Assert.assertNull(output);
 		
 	}
 	
@@ -84,7 +84,7 @@ class JsonUtilsTest {
 		try {
 			Map<String, Object> output = JsonUtils.parseJSON("holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfjasdklñgjsadklñgnasdklgjklasdjgklasdjgklasdjgksdjagklsdjgklsdj", new TypeReference<>() {});
 		} catch(IOException ee) {
-			Assert.assertThat(ee.getMessage(), equalTo("Error formating JSON from object: {} holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfj..."));
+			Assert.assertEquals(ee.getMessage(), "Error formating JSON from object: {} holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfj...");
 		}
 	}
 	
@@ -99,7 +99,7 @@ class JsonUtilsTest {
 		
 		String json = JsonUtils.toPrettyJSON(input);
 		
-		Assert.assertThat(json, equalTo(String.format("{%s  \"str\" : \"Hola\",%s  \"date\" : \"2020-06-22\",%s  \"num\" : 23%s}", LINE_SEP, LINE_SEP, LINE_SEP, LINE_SEP)));
+		Assert.assertEquals(json, String.format("{%s  \"str\" : \"Hola\",%s  \"date\" : \"2020-06-22\",%s  \"num\" : 23%s}", LINE_SEP, LINE_SEP, LINE_SEP, LINE_SEP));
 	}
 	
 	@Test
@@ -107,7 +107,7 @@ class JsonUtilsTest {
 		
 		String output = JsonUtils.toPrettyJSON(null);
 		
-		Assert.assertThat(output, equalTo(null));
+		Assert.assertNull(output);
 		
 	}
 	
@@ -116,7 +116,7 @@ class JsonUtilsTest {
 		
 		String output = JsonUtils.toPrettyJSON(null, Map.class);
 		
-		Assert.assertThat(output, equalTo(null));
+		Assert.assertNull(output);
 		
 	}
 	
@@ -132,7 +132,7 @@ class JsonUtilsTest {
 		
 		String json = JsonUtils.toPrettyJSON(input, Map.class);
 	
-		Assert.assertThat(json, equalTo(String.format("{%s  \"str\" : \"Hola\",%s  \"date\" : \"2020-06-22\",%s  \"num\" : 23%s}", LINE_SEP, LINE_SEP, LINE_SEP, LINE_SEP)));
+		Assert.assertEquals(json, String.format("{%s  \"str\" : \"Hola\",%s  \"date\" : \"2020-06-22\",%s  \"num\" : 23%s}", LINE_SEP, LINE_SEP, LINE_SEP, LINE_SEP));
 	}
 	
 	@Test
@@ -146,6 +146,6 @@ class JsonUtilsTest {
 		
 		Map<String, Object> mapa = JsonUtils.toMap(jsonNode);
 	
-		Assert.assertThat(mapa.toString(), equalTo("{f1=v1}"));
+		Assert.assertEquals(mapa.toString(), "{f1=v1}");
 	}
 }

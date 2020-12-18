@@ -17,7 +17,7 @@ class HashHelperTest {
 
 		String output = HashHelper.hashSHA256("Test");
 
-		Assert.assertThat(output, equalTo("532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"));
+		Assert.assertEquals(output, "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25");
 	}
 
 	@Test
@@ -25,7 +25,7 @@ class HashHelperTest {
 
 		String output = HashHelper.hashSHA256(null);
 
-		Assert.assertThat(output, equalTo(null));
+		Assert.assertNull(output);
 
 	}
 
@@ -35,7 +35,7 @@ class HashHelperTest {
 		String output ="";
 
 		output = HashHelper.hash("prueba", "dolores");
-		Assert.assertThat(output, equalTo(null));
+		Assert.assertNull(output);
 
 	}
 
@@ -44,7 +44,7 @@ class HashHelperTest {
 
 		String output = HashHelper.hashMD5("Test");
 
-		Assert.assertThat(output, equalTo("0cbc6611f5540bd0809a388dc95a615b"));
+		Assert.assertEquals(output, "0cbc6611f5540bd0809a388dc95a615b");
 	}
 
 	@Test
@@ -52,7 +52,7 @@ class HashHelperTest {
 
 		String output = HashHelper.hashMD5(null);
 
-		Assert.assertThat(output, equalTo(null));
+		Assert.assertNull(output);
 
 	}
 }

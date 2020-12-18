@@ -30,6 +30,12 @@ class ExceptionTest {
 	}
 	
 	@Test
+	void documentConversionException( ) {
+		QOException e = new DocumentConversionException();
+		assertNotNull(e);
+	}
+	
+	@Test
 	void elementNotFoundExceptionTest() {
 		String message = "Element not found";
 		QOException e = new ElementNotFoundException(message);
@@ -89,6 +95,12 @@ class ExceptionTest {
 	@Test
 	void maxUserDevicesReachedExceptionTest() {
 		QOException e = new MaxUserDevicesReachedException(5);
+		assertNotNull(e);
+	}
+	
+	@Test
+	void notSupportedDocFormatException() {
+		QOException e = new NotSupportedDocFormat();
 		assertNotNull(e);
 	}
 	

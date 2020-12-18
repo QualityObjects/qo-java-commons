@@ -1,8 +1,11 @@
 package com.qualityobjects.commons;
 
-import com.qualityobjects.commons.bean.Employee;
 import com.qualityobjects.commons.bean.Person;
 import com.qualityobjects.commons.utils.BeanBuilder;
+
+import lombok.Data;
+
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,7 +24,7 @@ class BeanBuilderTest {
 	private Person bean;
 	private BeanBuilder bb;
 	
-	//@Test
+	@Test
 	void beanBuilderExceptionsTest() {
 		// RuntimeException caught in the .fillRandomAtts() method for instantiating a class that does not exist
 		List<String> listAtts = new ArrayList<String>();
@@ -102,4 +105,9 @@ class BeanBuilderTest {
 
 }
 
+@Ignore
+class Employee extends Person {
+    private String job;
+    private int nif;
 
+}
