@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtils {
 
+    @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(JsonUtils.class);
 
     private static final ObjectMapper MAPPER = new ObjectMapper();

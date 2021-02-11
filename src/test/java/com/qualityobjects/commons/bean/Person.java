@@ -13,7 +13,4 @@ public class Person {
 	private double weight;
 	private String address;
 	
-	public Person() {
-	}
-	
 }

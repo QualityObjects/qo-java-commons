@@ -1,7 +1,5 @@
 package com.qualityobjects.commons.exception;
 
-import org.springframework.http.HttpStatus;
-
 /**
  * This exception is thrown when an error is raised in a conversion document process
  *
@@ -13,7 +11,7 @@ public class DocumentConversionException extends QOException {
   private static final long serialVersionUID = -1773642493200622300L;
 
   public DocumentConversionException() {
-    super(HttpStatus.EXPECTATION_FAILED.value(), ErrorCodes.DOCUMENT_ERROR, "Error converting document format");
+    super(417 /*EXPECTATION_FAILED*/, ErrorCodes.DOCUMENT_ERROR, "Error converting document format");
   }
 
 }

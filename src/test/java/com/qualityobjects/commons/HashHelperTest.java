@@ -3,13 +3,8 @@ package com.qualityobjects.commons;
 import com.qualityobjects.commons.utils.HashHelper;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.hamcrest.CoreMatchers.equalTo;
 
 
-@ExtendWith(MockitoExtension.class)
 class HashHelperTest {
 
 	@Test

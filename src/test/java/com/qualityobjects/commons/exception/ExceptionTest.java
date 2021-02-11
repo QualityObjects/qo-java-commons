@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
 
 import com.qualityobjects.commons.exception.QOException.ErrorCodes;
 
@@ -115,16 +114,17 @@ class ExceptionTest {
 		e = new QOException(errorCode, message, new InternalServerErrorException(message));
 		assertNotNull(e);
 		
-		int httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
+		int httpStatus = 500;
 		e = new QOException(httpStatus, errorCode, message, new InternalServerErrorException(message));
 		assertNotNull(e);
 	}
 	
 	@Test
 	void qoRuntimeExceptionTest() {
-		QORuntimeException re = new QORuntimeException(ErrorCodes.ACCESS_DENIED, "Access Denied");
-		int errorCode = re.getHttpStatus();
+		QORuntimeException re = new QORuntimeException(418, "Access Denied");
 		assertNotNull(re);
+		assertEquals(418, re.getHttpStatus());
+
 	}
 	
 	@Test

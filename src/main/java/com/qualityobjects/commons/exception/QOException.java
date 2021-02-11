@@ -1,7 +1,5 @@
 package com.qualityobjects.commons.exception;
 
-import org.springframework.http.HttpStatus;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +8,7 @@ public class QOException extends Exception {
 
 	private static final long serialVersionUID = 4884095608979032433L;
 
-	public static final int DEFAULT_APP_ERROR_STATUS_CODE = HttpStatus.I_AM_A_TEAPOT.value();
+	public static final int DEFAULT_APP_ERROR_STATUS_CODE = 418; // I_AM_A_TEAPOT
 	
 	private final int httpStatus;
 	private final int code;
@@ -75,6 +73,7 @@ public class QOException extends Exception {
 		return errorData;
 	}
 	
+	@SuppressWarnings("all")
 	public static class ErrorParams extends HashMap<String, Object> implements Serializable {
 
 		private static final long serialVersionUID = 1193043084819909738L;

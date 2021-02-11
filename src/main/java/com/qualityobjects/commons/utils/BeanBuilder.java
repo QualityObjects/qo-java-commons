@@ -45,84 +45,58 @@ public class BeanBuilder<T> {
     data.putAll(values);
     return this;
   }
-  
+
   public BeanBuilder<T> fillRandomAtts(List<String> listaAtributos) {
-		
-	  try {
-		Object bean;
-	  	beanClass.getDeclaredConstructor().newInstance();
-		
-		Method getterField;
-		
-		EasyRandomParameters parameters = new EasyRandomParameters()
-			   .seed(123L)
-			   .objectPoolSize(100)
-			   .randomizationDepth(3)
-			   .stringLengthRange(5, 50)
-			   .collectionSizeRange(1, 10)
-			   .scanClasspathForConcreteTypes(true)
-			   .ignoreRandomizationErrors(true)
-			   .excludeField(FieldPredicates.ofType(Blob.class));
-		
-		
-		EasyRandom generator = new EasyRandom(parameters);
-		
-		bean = generator.nextObject(beanClass);	
-		
-		for (String atributo : listaAtributos) {
-			getterField = beanClass.getDeclaredMethod("get".concat(WordUtils.capitalize(atributo)));
-			 
-			data.put(atributo, getterField.invoke(beanClass.cast(bean)));
-					
-		}
-	  
-	    return this;
-	  
-	  } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-		        | NoSuchMethodException | SecurityException e) {
-	        LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass), e);
-	        throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
-	  }
+
+    try {
+      Method getterField;
+
+      EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).objectPoolSize(100).randomizationDepth(3)
+          .stringLengthRange(5, 50).collectionSizeRange(1, 10).scanClasspathForConcreteTypes(true)
+          .ignoreRandomizationErrors(true).excludeField(FieldPredicates.ofType(Blob.class));
+
+      EasyRandom generator = new EasyRandom(parameters);
+
+      T bean = generator.nextObject(beanClass);
+
+      for (String atributo : listaAtributos) {
+        getterField = beanClass.getMethod("get".concat(WordUtils.capitalize(atributo)));
+
+        data.put(atributo, getterField.invoke(beanClass.cast(bean)));
+
+      }
+
+      return this;
+
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+        | NoSuchMethodException | SecurityException e) {
+      LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
+      throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
+    }
   }
 
   public T createRandomBean() {
-	  
-	  try {
-		T bean;
-		
-		beanClass.getDeclaredConstructor().newInstance();
-		
-		
-		EasyRandomParameters parameters = new EasyRandomParameters()
-			   .seed(123L)
-			   .objectPoolSize(100)
-			   .randomizationDepth(3)
-			   .stringLengthRange(5, 50)
-			   .collectionSizeRange(1, 10)
-			   .scanClasspathForConcreteTypes(true)
-			   .ignoreRandomizationErrors(true)
-			   .excludeField(FieldPredicates.ofType(Blob.class));
-		
-		
-		EasyRandom generator = new EasyRandom(parameters);
-		
-		bean = generator.nextObject(beanClass);	
-		
-	  
-	    return bean;
-	    
-	  } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-		        | NoSuchMethodException | SecurityException e) {
-	        LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass), e);
-	        throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
-	    }
+
+    try {
+      EasyRandomParameters parameters = new EasyRandomParameters().seed(123L).objectPoolSize(100).randomizationDepth(3)
+          .stringLengthRange(5, 50).collectionSizeRange(1, 10).scanClasspathForConcreteTypes(true)
+          .ignoreRandomizationErrors(true).excludeField(FieldPredicates.ofType(Blob.class));
+
+      EasyRandom generator = new EasyRandom(parameters);
+
+      return generator.nextObject(beanClass);
+
+    } catch (IllegalArgumentException | SecurityException e) {
+      LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
+      throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
+    }
   }
 
   public BeanBuilder<T> copyFrom(T origin) {
 
     if (origin != null) {
       for (Field field : beanClass.getDeclaredFields()) {
-        field.setAccessible(true);        
+        field.setAccessible(true);
         try {
           Object val = field.get(origin);
           if (val != null) {
@@ -136,14 +110,14 @@ public class BeanBuilder<T> {
 
     return this;
   }
-  
+
   public T build() {
-    
+
     try {
-      T bean = beanClass.getDeclaredConstructor().newInstance();
-      
-      for(Map.Entry<String, Object> fields: this.data.entrySet()) {
-    	String fieldName = fields.getKey();
+      T bean = beanClass.getConstructor().newInstance();
+
+      for (Map.Entry<String, Object> fields : this.data.entrySet()) {
+        String fieldName = fields.getKey();
         Field field = beanClass.getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(bean, data.get(fieldName));
@@ -152,10 +126,9 @@ public class BeanBuilder<T> {
       return bean;
     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
         | NoSuchMethodException | SecurityException | NoSuchFieldException e) {
-        LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass), e);
-        throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
+      LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
+      throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
     }
   }
-  
-  
+
 }

@@ -6,19 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qualityobjects.commons.utils.JsonUtils;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(MockitoExtension.class)
 class JsonUtilsTest {
 	private static final String LINE_SEP = System.getProperty("line.separator");
 	@Test
@@ -82,7 +78,7 @@ class JsonUtilsTest {
 	void testParseJsonException() throws IOException {
 		
 		try {
-			Map<String, Object> output = JsonUtils.parseJSON("holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfjasdklñgjsadklñgnasdklgjklasdjgklasdjgklasdjgksdjagklsdjgklsdj", new TypeReference<>() {});
+			JsonUtils.parseJSON("holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfjasdklñgjsadklñgnasdklgjklasdjgklasdjgklasdjgksdjagklsdjgklsdj", new TypeReference<>() {});
 		} catch(IOException ee) {
 			Assert.assertEquals(ee.getMessage(), "Error formating JSON from object: {} holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfj...");
 		}
