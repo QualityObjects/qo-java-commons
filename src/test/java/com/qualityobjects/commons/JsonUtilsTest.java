@@ -1,19 +1,20 @@
 package com.qualityobjects.commons;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qualityobjects.commons.utils.JsonUtils;
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qualityobjects.commons.utils.JsonUtils;
 
 class JsonUtilsTest {
 	private static final String LINE_SEP = System.getProperty("line.separator");
@@ -80,7 +81,7 @@ class JsonUtilsTest {
 		try {
 			JsonUtils.parseJSON("holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfjasdklñgjsadklñgnasdklgjklasdjgklasdjgklasdjgksdjagklsdjgklsdj", new TypeReference<>() {});
 		} catch(IOException ee) {
-			Assert.assertEquals(ee.getMessage(), "Error formating JSON from object: {} holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfj...");
+			Assert.assertEquals(ee.getMessage(), "Error formating JSON from object: {} holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgf...");
 		}
 	}
 	
