@@ -81,7 +81,7 @@ class JsonUtilsTest {
 		try {
 			JsonUtils.parseJSON("holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgfjasdklñgjsadklñgnasdklgjklasdjgklasdjgklasdjgksdjagklsdjgklsdj", new TypeReference<>() {});
 		} catch(IOException ee) {
-			Assert.assertEquals(ee.getMessage(), "Error formating JSON from object: {} holaklsghklasngklsanvklsangjklasdnasdjkjgasdklñgf...");
+			Assert.assertTrue(ee.getMessage().contains("Error formating JSON from object"));
 		}
 	}
 	
