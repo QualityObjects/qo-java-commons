@@ -3,6 +3,7 @@ package com.qualityobjects.commons.utils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -77,6 +78,19 @@ public class JsonUtils {
                 return type;
             }
         });
+    }
+
+    public static <T> T parseJSON(String json, JavaType javaType) throws IOException {
+        try {
+            if (json == null)
+                return null;
+            return MAPPER.readValue(json, javaType);
+        } catch (JsonParseException e) {
+            if (json.length() > 60) {
+                json = json.substring(0, 50) + "...";
+            }
+            throw new IOException(ERROR_JSON + json, e);
+        }
     }
 
     public static <T> T parseJSON(String json, TypeReference<T> type) throws IOException {
