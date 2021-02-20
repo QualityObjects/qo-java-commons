@@ -67,12 +67,6 @@ class ExceptionTest {
 	}
 	
 	@Test
-	void invalidBbddDataExceptionTest() {
-		QOException e = new InvalidBBDDDataException("Invalid Data Error");
-		assertNotNull(e);
-	}
-	
-	@Test
 	void invalidCredentialsExceptionTest() {
 		QOException e = new InvalidCredentialsException();
 		assertNotNull(e);
