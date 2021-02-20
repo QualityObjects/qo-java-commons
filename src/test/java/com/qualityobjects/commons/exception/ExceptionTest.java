@@ -99,8 +99,16 @@ class ExceptionTest {
 	
 	@Test
 	void notSupportedDocFormatException() {
-		QOException e = new NotSupportedDocFormat();
-		assertNotNull(e);
+		assertThrows(NotSupportedDocFormat.class, () -> {
+			try {
+				throw new NotSupportedDocFormat();
+			} catch (QOException ex) {
+				assertEquals("Document format not supported", ex.getMessage());
+				assertEquals(415 /* UNSUPPORTED_MEDIA_TYPE */, ex.getHttpStatus());
+				assertEquals(ErrorCodes.DOCUMENT_ERROR, ex.getCode());
+				throw ex;
+			}
+		});
 	}
 	
 	@Test
@@ -121,15 +129,29 @@ class ExceptionTest {
 	
 	@Test
 	void qoRuntimeExceptionTest() {
-		QORuntimeException re = new QORuntimeException(418, "Access Denied");
-		assertNotNull(re);
-		assertEquals(418, re.getHttpStatus());
+		assertThrows(QORuntimeException.class, () -> {
+			try {
+				throw new QORuntimeException("Unexpected error");
+			} catch (QORuntimeException ex) {
+				assertEquals("Unexpected error", ex.getMessage());
+				assertEquals(QOException.DEFAULT_APP_ERROR_STATUS_CODE, ex.getHttpStatus());
+				throw ex;
+			}
+		});
 
 	}
-	
+		
 	@Test
-	void sqlSetExceptionTest() {
-		QORuntimeException re = new SQLSetException();
-		assertNotNull(re);
+	void dataReadRuntimeExceptionTest() {
+		assertThrows(DataReadRuntimeException.class, () -> {
+			try {
+				throw new DataReadRuntimeException();
+			} catch (QORuntimeException ex) {
+				assertEquals("Unexpected error reading data", ex.getMessage());
+				assertEquals(QOException.DEFAULT_APP_ERROR_STATUS_CODE, ex.getHttpStatus());
+				throw ex;
+			}
+		});
+		
 	}
 }
