@@ -15,4 +15,8 @@ public class DataReadRuntimeException extends QORuntimeException {
 		super(msg);
 	}
 
+	public DataReadRuntimeException(String msg, Throwable rootCause) {
+		super(msg, rootCause);
+	}
+
 }
