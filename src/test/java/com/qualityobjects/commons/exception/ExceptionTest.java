@@ -22,17 +22,17 @@ class ExceptionTest {
 		assertNotNull(re);
 	}
 	
-	@Test
-	void descriptorUpdateErrorExceptionTest() {
-		QOException e = new DescriptorUpdateErrorException("Descriptor Update Error");
-		assertNotNull(e);
-	}
+//	@Test
+//	void descriptorUpdateErrorExceptionTest() {
+//		QOException e = new DescriptorUpdateErrorException("Descriptor Update Error");
+//		assertNotNull(e);
+//	}
 	
-	@Test
-	void documentConversionException( ) {
-		QOException e = new DocumentConversionException();
-		assertNotNull(e);
-	}
+//	@Test
+//	void documentConversionException( ) {
+//		QOException e = new DocumentConversionException();
+//		assertNotNull(e);
+//	}
 	
 	@Test
 	void elementNotFoundExceptionTest() {
@@ -60,11 +60,11 @@ class ExceptionTest {
 		assertNotNull(e);
 	}
 	
-	@Test
-	void invalidActivityTimeRangeExceptionTest() {
-		QOException e = new InvalidActivityTimeRangeException();
-		assertNotNull(e);
-	}
+//	@Test
+//	void invalidActivityTimeRangeExceptionTest() {
+//		QOException e = new InvalidActivityTimeRangeException();
+//		assertNotNull(e);
+//	}
 	
 	@Test
 	void invalidCredentialsExceptionTest() {
@@ -85,25 +85,25 @@ class ExceptionTest {
 		assertNotNull(e);
 	}
 	
-	@Test
-	void maxUserDevicesReachedExceptionTest() {
-		QOException e = new MaxUserDevicesReachedException(5);
-		assertNotNull(e);
-	}
+//	@Test
+//	void maxUserDevicesReachedExceptionTest() {
+//		QOException e = new MaxUserDevicesReachedException(5);
+//		assertNotNull(e);
+//	}
 	
-	@Test
-	void notSupportedDocFormatException() {
-		assertThrows(NotSupportedDocFormat.class, () -> {
-			try {
-				throw new NotSupportedDocFormat();
-			} catch (QOException ex) {
-				assertEquals("Document format not supported", ex.getMessage());
-				assertEquals(415 /* UNSUPPORTED_MEDIA_TYPE */, ex.getHttpStatus());
-				assertEquals(ErrorCodes.DOCUMENT_ERROR, ex.getCode());
-				throw ex;
-			}
-		});
-	}
+//	@Test
+//	void notSupportedDocFormatException() {
+//		assertThrows(NotSupportedDocFormat.class, () -> {
+//			try {
+//				throw new NotSupportedDocFormat();
+//			} catch (QOException ex) {
+//				assertEquals("Document format not supported", ex.getMessage());
+//				assertEquals(415 /* UNSUPPORTED_MEDIA_TYPE */, ex.getHttpStatus());
+//				assertEquals(ErrorCodes.DOCUMENT_ERROR, ex.getCode());
+//				throw ex;
+//			}
+//		});
+//	}
 	
 	@Test
 	void qoExceptionTest() {
