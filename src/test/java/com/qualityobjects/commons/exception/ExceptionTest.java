@@ -79,11 +79,11 @@ class ExceptionTest {
 		assertNotNull(e);
 	}
 	
-	@Test
-	void invalidTokenExceptionTest() {
-		QOException e = new InvalidTokenException();
-		assertNotNull(e);
-	}
+//	@Test
+//	void invalidTokenExceptionTest() {
+//		QOException e = new InvalidTokenException();
+//		assertNotNull(e);
+//	}
 	
 //	@Test
 //	void maxUserDevicesReachedExceptionTest() {
