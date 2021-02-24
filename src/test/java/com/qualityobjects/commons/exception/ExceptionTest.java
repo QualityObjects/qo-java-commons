@@ -15,6 +15,7 @@ class ExceptionTest {
 		QORuntimeException re = new ClassNotInstantiatedException();
 		assertNotNull(re);
 	}
+
 	
 	@Test
 	void elementNotFoundExceptionTest() {
@@ -36,11 +37,11 @@ class ExceptionTest {
 		assertNotNull(e);
 	}
 	
-	@Test
-	void invalidCredentialsExceptionTest() {
-		QOException e = new InvalidCredentialsException();
-		assertNotNull(e);
-	}
+//	@Test
+//	void invalidCredentialsExceptionTest() {
+//		QOException e = new InvalidCredentialsException();
+//		assertNotNull(e);
+//	}
 	
 	@Test
 	void invalidInputDataExceptionTest() {
