@@ -1,6 +1,9 @@
 package com.qualityobjects.commons.bean;
 
+import java.time.LocalDate;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 public class Person {
@@ -11,6 +14,11 @@ public class Person {
 	private String dni;
 	private double height;
 	private double weight;
-	private String address;
-	
+	private LocalDate birthDate;
+
+	@Data
+	@EqualsAndHashCode(callSuper = false)
+	public static class Child extends Person {
+		private String school;
+	}
 }

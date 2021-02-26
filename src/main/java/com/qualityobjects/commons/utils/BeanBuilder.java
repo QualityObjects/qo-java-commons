@@ -6,10 +6,12 @@ import org.apache.commons.text.WordUtils;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.FieldPredicates;
+import org.jeasy.random.util.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.qualityobjects.commons.exception.ClassNotInstantiatedException;
+import com.qualityobjects.commons.exception.QORuntimeException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -60,7 +62,7 @@ public class BeanBuilder<T> {
       T bean = generator.nextObject(beanClass);
 
       for (String atributo : listaAtributos) {
-        getterField = beanClass.getMethod("get".concat(WordUtils.capitalize(atributo)));
+        getterField = beanClass.getMethod("get" + WordUtils.capitalize(atributo));
 
         data.put(atributo, getterField.invoke(beanClass.cast(bean)));
 
@@ -68,8 +70,8 @@ public class BeanBuilder<T> {
 
       return this;
 
-    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-        | NoSuchMethodException | SecurityException e) {
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+        | SecurityException e) {
       LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
       throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
     }
@@ -84,7 +86,10 @@ public class BeanBuilder<T> {
 
       EasyRandom generator = new EasyRandom(parameters);
 
-      return generator.nextObject(beanClass);
+      T bean = generator.nextObject(beanClass);
+      // Using current setted values to overwrite random values
+      populateCurrentFields(bean);
+      return bean;
 
     } catch (IllegalArgumentException | SecurityException e) {
       LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
@@ -111,21 +116,44 @@ public class BeanBuilder<T> {
     return this;
   }
 
+  private void populateCurrentFields(T bean) {
+    try {
+      for (Map.Entry<String, Object> fieldData : this.data.entrySet()) {
+        String fieldName = fieldData.getKey();
+
+        if (fieldData.getValue() == null) {
+          continue;
+        }
+        Field field = this.getField(bean.getClass(), fieldName);
+        ReflectionUtils.setProperty(bean, field, fieldData.getValue());
+      }
+    } catch (SecurityException | IllegalAccessException | IllegalArgumentException  e) {
+      LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
+      throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
+    }
+  }
+
+  private Field getField(Class<?> beanClass, String fieldName) {
+    try {
+      return beanClass.getDeclaredField(fieldName);
+    } catch (NoSuchFieldException ex) {
+      if (!beanClass.getSuperclass().equals(Object.class)) {
+        return this.getField(beanClass.getSuperclass(), fieldName);
+      }
+      throw new QORuntimeException(String.format("No field found for att: %s.%s", beanClass.getSimpleName(), fieldName));
+    }
+  }
+
   public T build() {
 
     try {
       T bean = beanClass.getConstructor().newInstance();
 
-      for (Map.Entry<String, Object> fields : this.data.entrySet()) {
-        String fieldName = fields.getKey();
-        Field field = beanClass.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(bean, data.get(fieldName));
-      }
+      populateCurrentFields(bean);
 
       return bean;
-    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-        | NoSuchMethodException | SecurityException | NoSuchFieldException e) {
+    } catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
+        | InvocationTargetException | NoSuchMethodException e) {
       LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
       throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
     }

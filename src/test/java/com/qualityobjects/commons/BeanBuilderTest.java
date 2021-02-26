@@ -1,20 +1,22 @@
 package com.qualityobjects.commons;
 
-import com.qualityobjects.commons.bean.Person;
-import com.qualityobjects.commons.exception.ClassNotInstantiatedException;
-import com.qualityobjects.commons.utils.BeanBuilder;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.Test;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import com.qualityobjects.commons.bean.Person;
+import com.qualityobjects.commons.bean.Person.Child;
+import com.qualityobjects.commons.exception.QORuntimeException;
+import com.qualityobjects.commons.utils.BeanBuilder;
+
+import org.junit.jupiter.api.Test;
 
 class BeanBuilderTest {
 	
@@ -22,8 +24,8 @@ class BeanBuilderTest {
 	void beanBuilderExceptionsTest() {
 		final BeanBuilder<Person> bb = BeanBuilder.builder(Person.class);
 		
-		assertThrows("Atributo no debe existir", ClassNotInstantiatedException.class, () -> bb.fillRandomAtts(List.of("NO_EXISTE")));
-		assertThrows("Atributo no debe existir", ClassNotInstantiatedException.class, () -> bb.set("MISSING", 33).build());
+		assertThrows("Atributo no debe existir", QORuntimeException.class, () -> bb.fillRandomAtts(List.of("NO_EXISTE")));
+		assertThrows("Atributo no debe existir", QORuntimeException.class, () -> bb.set("MISSING", 33).build());
 		
 	}
 	
@@ -64,7 +66,6 @@ class BeanBuilderTest {
 		listAtts.add("dni");
 		listAtts.add("height");
 		listAtts.add("weight");
-		listAtts.add("address");
 		bean = BeanBuilder.builder(Person.class)
 				.fillRandomAtts(listAtts)
 				.build();
@@ -85,16 +86,34 @@ class BeanBuilderTest {
 				.createRandomBean();
 		assertNotNull(p);
 
-		// Set test bean values
-		p.setFirstName("María");
-		p.setLastName("Hernández");
-		p.setAge(45);
-		p.setGenre("M");
-		p.setDni("12767554M");
-		p.setHeight(1.60);
-		p.setWeight(65.4);
-		p.setAddress("c/ Alcalá, 20");
+		assertNotNull(p.getAge());
+		assertNotNull(p.getFirstName());
+		assertNotNull(p.getDni());
+		assertNotNull(p.getLastName());
+		assertNotNull(p.getWeight());
+		assertNotNull(p.getHeight());
+		assertNotNull(p.getBirthDate());
+		assertNotNull(p.getGenre());
+		
 	}
 
+
+	@Test
+	void randomBeanTest() {
+		Child child = BeanBuilder.builder(Child.class)
+			.set("birthDate", LocalDate.of(2000, 1, 1))
+			.set("school", "Hogwarts")
+			.createRandomBean();
+		assertNotNull(child.getAge());
+		assertNotNull(child.getFirstName());
+		assertNotNull(child.getDni());
+		assertNotNull(child.getLastName());
+		assertNotNull(child.getWeight());
+		assertNotNull(child.getHeight());
+		assertNotNull(child.getBirthDate());
+		assertNotNull(child.getGenre());
+		assertEquals("Hogwarts", child.getSchool());
+		assertEquals(LocalDate.of(2000, 1, 1), child.getBirthDate());	
+	}
 }
 
