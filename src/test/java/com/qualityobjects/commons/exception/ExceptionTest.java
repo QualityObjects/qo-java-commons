@@ -9,30 +9,13 @@ import org.junit.jupiter.api.Test;
 import com.qualityobjects.commons.exception.QOException.ErrorCodes;
 
 class ExceptionTest {
-	
-	@Test
-	void accessDeniedExceptionTest() {
-		QOException e = new AccessDeniedException();
-		assertNotNull(e);
-	}
 
 	@Test
 	void classNotInstantiatedExceptionTest() {
 		QORuntimeException re = new ClassNotInstantiatedException();
 		assertNotNull(re);
 	}
-	
-	@Test
-	void descriptorUpdateErrorExceptionTest() {
-		QOException e = new DescriptorUpdateErrorException("Descriptor Update Error");
-		assertNotNull(e);
-	}
-	
-	@Test
-	void documentConversionException( ) {
-		QOException e = new DocumentConversionException();
-		assertNotNull(e);
-	}
+
 	
 	@Test
 	void elementNotFoundExceptionTest() {
@@ -49,60 +32,22 @@ class ExceptionTest {
 	}
 	
 	@Test
-	void generatingCsvErrorExceptionTest() {
-		QOException e = new GeneratingCSVErrorException("Error generating CSV");
-		assertNotNull(e);
-	}
-	
-	@Test
 	void internalServerErrorExceptionTest() {
 		QOException e = new InternalServerErrorException("Internal Server Error");
 		assertNotNull(e);
 	}
 	
-	@Test
-	void invalidActivityTimeRangeExceptionTest() {
-		QOException e = new InvalidActivityTimeRangeException();
-		assertNotNull(e);
-	}
-	
-	@Test
-	void invalidCredentialsExceptionTest() {
-		QOException e = new InvalidCredentialsException();
-		assertNotNull(e);
-	}
+//	@Test
+//	void invalidCredentialsExceptionTest() {
+//		QOException e = new InvalidCredentialsException();
+//		assertNotNull(e);
+//	}
 	
 	@Test
 	void invalidInputDataExceptionTest() {
 		QOException e = new InvalidInputDataException();
 		e = new InvalidInputDataException("Invalid input data");
 		assertNotNull(e);
-	}
-	
-	@Test
-	void invalidTokenExceptionTest() {
-		QOException e = new InvalidTokenException();
-		assertNotNull(e);
-	}
-	
-	@Test
-	void maxUserDevicesReachedExceptionTest() {
-		QOException e = new MaxUserDevicesReachedException(5);
-		assertNotNull(e);
-	}
-	
-	@Test
-	void notSupportedDocFormatException() {
-		assertThrows(NotSupportedDocFormat.class, () -> {
-			try {
-				throw new NotSupportedDocFormat();
-			} catch (QOException ex) {
-				assertEquals("Document format not supported", ex.getMessage());
-				assertEquals(415 /* UNSUPPORTED_MEDIA_TYPE */, ex.getHttpStatus());
-				assertEquals(ErrorCodes.DOCUMENT_ERROR, ex.getCode());
-				throw ex;
-			}
-		});
 	}
 	
 	@Test
