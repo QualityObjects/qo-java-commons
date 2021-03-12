@@ -1,17 +1,13 @@
 package com.qualityobjects.commons.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
+@Slf4j
 public class HashHelper {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(HashHelper.class);
-
 	
 	/**
 	 * Constructor
@@ -45,7 +41,7 @@ public class HashHelper {
 		try {
 			digest = MessageDigest.getInstance(alg);
 		} catch (NoSuchAlgorithmException e) {
-			LOG.error(e.getMessage());
+			log.error(e.getMessage());
 			return null;
 		}
 		return bytesToHex(digest.digest(text.toString().getBytes(StandardCharsets.UTF_8)));
