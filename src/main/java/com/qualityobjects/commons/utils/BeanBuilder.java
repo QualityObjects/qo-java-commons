@@ -2,13 +2,13 @@ package com.qualityobjects.commons.utils;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.text.WordUtils;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.FieldPredicates;
 import org.jeasy.random.util.ReflectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.qualityobjects.commons.exception.ClassNotInstantiatedException;
 import com.qualityobjects.commons.exception.QORuntimeException;
@@ -27,11 +27,11 @@ import java.util.Map;
  * @author Siroco Team [siroco@qualityobjects.com]
  * @since 1.1.0
  */
+@Slf4j
 @Data
 @RequiredArgsConstructor(staticName = "builder")
 public class BeanBuilder<T> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(BeanBuilder.class);
   private static final String INSTANCE_ERROR = "Class can not be instantiated: %s";
   private static final String CREATE_INSTANCE_ERROR = "Error creating instance of: %s";
 
@@ -72,7 +72,7 @@ public class BeanBuilder<T> {
 
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
         | SecurityException e) {
-      LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
+      log.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
       throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
     }
   }
@@ -92,7 +92,7 @@ public class BeanBuilder<T> {
       return bean;
 
     } catch (IllegalArgumentException | SecurityException e) {
-      LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
+      log.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
       throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
     }
   }
@@ -128,7 +128,7 @@ public class BeanBuilder<T> {
         ReflectionUtils.setProperty(bean, field, fieldData.getValue());
       }
     } catch (SecurityException | IllegalAccessException | IllegalArgumentException  e) {
-      LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
+      log.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
       throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
     }
   }
@@ -154,7 +154,7 @@ public class BeanBuilder<T> {
       return bean;
     } catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
         | InvocationTargetException | NoSuchMethodException e) {
-      LOG.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
+      log.error(String.format(CREATE_INSTANCE_ERROR, this.beanClass) + ". " + e);
       throw new ClassNotInstantiatedException(String.format(INSTANCE_ERROR, this.beanClass));
     }
   }
