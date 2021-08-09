@@ -1,20 +1,19 @@
 package com.qualityobjects.commons.utils;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 public class HashHelper {
-	
+
 	/**
 	 * Constructor
 	 */
 	private HashHelper() {
 	}
-
 
 	/**
 	 * Genera el hash del string pasado por parámetro con el algoritmo SHA-256.
@@ -26,9 +25,9 @@ public class HashHelper {
 		return hash(text, "SHA-256");
 	}
 
-
 	/**
-	 * Genera el hash del string pasado por parámetro con el algoritmo pasado por parámetro
+	 * Genera el hash del string pasado por parámetro con el algoritmo pasado por
+	 * parámetro
 	 * 
 	 * @param text
 	 * @return código hash en hexadecimal o null si hay una excepción.
@@ -47,7 +46,6 @@ public class HashHelper {
 		return bytesToHex(digest.digest(text.toString().getBytes(StandardCharsets.UTF_8)));
 	}
 
-
 	/**
 	 * Genera el hash del string pasado por parámetro con el algoritmo MD5
 	 * 
@@ -59,22 +57,33 @@ public class HashHelper {
 	}
 
 	/**
-	 * Convierte un arry binario como byte[] en una representación hexadecimal en un String.
+	 * Convierte un arry binario como byte[] en una representación hexadecimal en un
+	 * String.
 	 * 
 	 * @param hash
 	 * @return
 	 */
 	public static String bytesToHex(byte[] hash) {
-	    StringBuilder hexString = new StringBuilder();
-	    for (int i = 0; i < hash.length; i++)
-	    {
-		    String hex = Integer.toHexString(0xff & hash[i]);
-		    if(hex.length() == 1) 
-		    {	
-		    	hexString.append('0');
-		    }
-		        hexString.append(hex);
-	    }
-	    return hexString.toString();
+		StringBuilder hexString = new StringBuilder();
+		for (int i = 0; i < hash.length; i++) {
+			String hex = Integer.toHexString(0xff & hash[i]);
+			if (hex.length() == 1) {
+				hexString.append('0');
+			}
+			hexString.append(hex);
+		}
+		return hexString.toString();
+	}
+
+	public static String calculateChecksum(MessageDigest md) {
+
+		StringBuilder sb = new StringBuilder();
+		byte[] md5;
+		md5 = md.digest();
+		for (byte b : md5) {
+			sb.append(String.format("%02X", b));
+		}
+		return sb.toString().toUpperCase();
+
 	}
 }
