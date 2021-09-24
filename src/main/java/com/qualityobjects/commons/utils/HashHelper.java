@@ -65,25 +65,19 @@ public class HashHelper {
 	 */
 	public static String bytesToHex(byte[] hash) {
 		StringBuilder hexString = new StringBuilder();
-		for (int i = 0; i < hash.length; i++) {
-			String hex = Integer.toHexString(0xff & hash[i]);
-			if (hex.length() == 1) {
-				hexString.append('0');
-			}
-			hexString.append(hex);
+		for (byte byteData : hash) {
+			hexString.append(String.format("%02X", byteData));
 		}
 		return hexString.toString();
 	}
 
-	public static String calculateChecksum(MessageDigest md) {
-
-		StringBuilder sb = new StringBuilder();
-		byte[] md5;
-		md5 = md.digest();
-		for (byte b : md5) {
-			sb.append(String.format("%02X", b));
-		}
-		return sb.toString().toUpperCase();
-
+	/**
+	 * Return the 
+	 * 
+	 * @param hash
+	 * @return
+	 */
+	public static String calculateHexChecksum(MessageDigest md) {
+		return bytesToHex(md.digest());
 	}
 }
