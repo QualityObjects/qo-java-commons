@@ -12,7 +12,7 @@ class HashHelperTest {
 
 		String output = HashHelper.hashSHA256("Test");
 
-		Assert.assertEquals(output, "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25".toUpperCase());
+		Assert.assertEquals(output, "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25");
 	}
 
 	@Test
@@ -39,7 +39,7 @@ class HashHelperTest {
 
 		String output = HashHelper.hashMD5("Test");
 
-		Assert.assertEquals(output, "0cbc6611f5540bd0809a388dc95a615b".toUpperCase());
+		Assert.assertEquals(output, "0cbc6611f5540bd0809a388dc95a615b");
 	}
 
 	@Test

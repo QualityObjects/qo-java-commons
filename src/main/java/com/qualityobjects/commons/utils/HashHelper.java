@@ -66,7 +66,7 @@ public class HashHelper {
 	public static String bytesToHex(byte[] hash) {
 		StringBuilder hexString = new StringBuilder();
 		for (byte byteData : hash) {
-			hexString.append(String.format("%02X", byteData));
+			hexString.append(String.format("%02x", byteData));
 		}
 		return hexString.toString();
 	}
