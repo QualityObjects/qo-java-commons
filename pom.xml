@@ -6,7 +6,7 @@
 	<artifactId>qo-java-commons</artifactId>
 	<version>0.0.8-SNAPSHOT</version>
 	<name>qo-java-commons</name>
-	<description>commons de hemera</description>
+	<description>Clases java comunes a cualquier proyecto Java</description>
 
 	<properties>
 		<java.version>11</java.version>
